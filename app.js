@@ -24,18 +24,35 @@ const Blog = mongoose.model("blog",blogSchema);
 
 // Routing
 app.get("/",(req,res)=>{
-    res.redirect('/blog');
-})
+    res.redirect('/blogs');
+});
 
-app.get("/blog",(req,res)=>{
+//Index
+app.get("/blogs",(req,res)=>{
     Blog.find({},(err,blogs)=>{
         if(err){
             console.log(err);
         } else{
             res.render("index",{blogs:blogs});
         }
-    })
-})
+    });
+});
+
+//NEW ROUTING
+app.get("/blogs/new",(req,res)=>{
+    res.render("new");
+});
+
+//CREATE ROUTING
+app.post("/blogs",(req,res)=>{
+   Blog.create(req.body.blog,(err,newblog)=>{
+      if(err){
+          console.log(err);
+      }else{
+          res.redirect("/");
+      }
+   }); 
+});
 
 app.listen(process.env.PORT, process.env.IP, () => {
   console.log('BlogApp Server has Start at https://mypjbootcamp-mythk.c9users.io/ !!');
