@@ -54,6 +54,18 @@ app.post("/blogs",(req,res)=>{
    }); 
 });
 
+//SHOW ROUTING
+app.get("/blogs/:id",(req,res)=>{
+    const Id = req.params.id ;
+    Blog.findById(Id,(err,result)=>{
+        if(err){
+            res.redirect("/");
+        }else{
+            res.render("show",{blog:result});
+        }
+    });
+});
+
 app.listen(process.env.PORT, process.env.IP, () => {
   console.log('BlogApp Server has Start at https://mypjbootcamp-mythk.c9users.io/ !!');
 });
