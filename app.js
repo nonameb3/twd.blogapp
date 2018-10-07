@@ -1,5 +1,6 @@
 const bodyParser = require("body-parser"),
 methodOverride = require("method-override"),
+expressSanitizer = require('express-sanitizer'),
 mongoose = require("mongoose"),
 express = require("express"),
 app = express();
@@ -10,6 +11,7 @@ mongoose.set('useFindAndModify', false);
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 // Mongoose , Model config
@@ -47,7 +49,8 @@ app.get("/blogs/new",(req,res)=>{
 
 // CREATE ROUTING
 app.post("/blogs",(req,res)=>{
-   Blog.create(req.body.blog,(err,newblog)=>{
+    req.body.blog.body = req.sanitize(req.body.blog.body);
+    Blog.create(req.body.blog,(err,newblog)=>{
       if(err){
           console.log(err);
       }else{
@@ -82,6 +85,7 @@ app.get("/blogs/:id/edit",(req,res)=>{
 
 // UPDATE ROUTING
 app.put("/blogs/:id",(req,res)=>{
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     const Id = req.params.id ;
     const NewValue = req.body.blog ;
     // Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
