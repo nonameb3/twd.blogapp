@@ -12,6 +12,9 @@
             </div>
         </div>
         <a href = "/blogs/<%=blog._id%>/edit">Edit</a>
+        <form action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
+            <button class="ui active button">Delete</button>
+        </form>
     </div>
 </div>
 <% include ./partials/footer %>

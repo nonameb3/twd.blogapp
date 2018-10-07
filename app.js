@@ -28,7 +28,7 @@ app.get("/",(req,res)=>{
     res.redirect('/blogs');
 });
 
-//INDEX
+// INDEX
 app.get("/blogs",(req,res)=>{
     Blog.find({},(err,blogs)=>{
         if(err){
@@ -39,12 +39,12 @@ app.get("/blogs",(req,res)=>{
     });
 });
 
-//NEW ROUTING
+// NEW ROUTING
 app.get("/blogs/new",(req,res)=>{
     res.render("new");
 });
 
-//CREATE ROUTING
+// CREATE ROUTING
 app.post("/blogs",(req,res)=>{
    Blog.create(req.body.blog,(err,newblog)=>{
       if(err){
@@ -55,7 +55,7 @@ app.post("/blogs",(req,res)=>{
    }); 
 });
 
-//SHOW ROUTING
+// SHOW ROUTING
 app.get("/blogs/:id",(req,res)=>{
     const Id = req.params.id ;
     Blog.findById(Id,(err,result)=>{
@@ -67,7 +67,7 @@ app.get("/blogs/:id",(req,res)=>{
     });
 });
 
-//EDIT ROUTING
+// EDIT ROUTING
 app.get("/blogs/:id/edit",(req,res)=>{
     const Id = req.params.id ;
     Blog.findById(Id,(err,result)=>{
@@ -79,20 +79,30 @@ app.get("/blogs/:id/edit",(req,res)=>{
     });
 });
 
-//UPDATE ROUTING
+// UPDATE ROUTING
 app.put("/blogs/:id",(req,res)=>{
     const Id = req.params.id ;
     const NewValue = req.body.blog ;
-    // Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
-    Blog.findOneAndUpdate(Id,NewValue,(err,result)=>{
+    // Blog.findOneAndUpdate(Id,NewValue,(err,result)=>{
+    Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
         if(err){
-            console.log(err);
             res.redirect("/");
         }else{
-            console.log("Update!!");
-            res.redirect("/blogs/"+result._id);
+            res.redirect("/blogs/" + result._id);
         }
-    })
+    });
+});
+
+// DELETE ROUTING
+app.delete("/blogs/:id",(req,res)=>{
+    const Id = req.params.id;
+    Blog.findByIdAndRemove(Id,(err,result)=>{
+        if(err){
+            res.redirect("/");
+        }else{
+            res.redirect("/");
+        }
+    });
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
