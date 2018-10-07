@@ -11,10 +11,16 @@
                 <p><%= blog.body %></p>
             </div>
         </div>
-        <a href = "/blogs/<%=blog._id%>/edit">Edit</a>
-        <form action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
-            <button class="ui active button">Delete</button>
-        </form>
+        <div class="ui buttons">
+            <form action="/blogs/<%=blog._id%>/edit" method="GET">
+                <button class="ui positive button">Edit</button>
+            </form>
+            <div class="or"></div>
+            <form action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
+                <button class="ui red button">Delete</button>
+            </form>
+        </div>
+        
     </div>
 </div>
 <% include ./partials/footer %>

@@ -6,6 +6,7 @@ app = express();
 
 // App Config
 mongoose.connect("mongodb://localhost:27017/restful_blog_app", { useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -83,8 +84,8 @@ app.get("/blogs/:id/edit",(req,res)=>{
 app.put("/blogs/:id",(req,res)=>{
     const Id = req.params.id ;
     const NewValue = req.body.blog ;
-    // Blog.findOneAndUpdate(Id,NewValue,(err,result)=>{
-    Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
+    // Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
+    Blog.findOneAndUpdate({"_id":Id},NewValue,(err,result)=>{
         if(err){
             res.redirect("/");
         }else{
