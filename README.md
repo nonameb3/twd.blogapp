@@ -1,4 +1,5 @@
-# Blogapp - NodeJS Technology Web App Development by The Web Developer Bootcamp.
+# Blogapp - NodeJS Technology Web App Development 
+## By The Web Developer Bootcamp.
 My NodeJS exercise from Colt Steele's Udemy Web Development course.
 
 ## Technology
@@ -13,5 +14,5 @@ My NodeJS exercise from Colt Steele's Udemy Web Development course.
     - Express
     - Method override
     - body-parser
-
+    - express-sanitizer
 
