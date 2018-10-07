@@ -1,4 +1,5 @@
 const bodyParser = require("body-parser"),
+methodOverride = require("method-override"),
 mongoose = require("mongoose"),
 express = require("express"),
 app = express();
@@ -8,7 +9,7 @@ mongoose.connect("mongodb://localhost:27017/restful_blog_app", { useNewUrlParser
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
-
+app.use(methodOverride("_method"));
 
 // Mongoose , Model config
 const blogSchema = new mongoose.Schema({
@@ -27,7 +28,7 @@ app.get("/",(req,res)=>{
     res.redirect('/blogs');
 });
 
-//Index
+//INDEX
 app.get("/blogs",(req,res)=>{
     Blog.find({},(err,blogs)=>{
         if(err){
@@ -64,6 +65,34 @@ app.get("/blogs/:id",(req,res)=>{
             res.render("show",{blog:result});
         }
     });
+});
+
+//EDIT ROUTING
+app.get("/blogs/:id/edit",(req,res)=>{
+    const Id = req.params.id ;
+    Blog.findById(Id,(err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.render("edit",{blog:result});
+        }
+    });
+});
+
+//UPDATE ROUTING
+app.put("/blogs/:id",(req,res)=>{
+    const Id = req.params.id ;
+    const NewValue = req.body.blog ;
+    // Blog.findByIdAndUpdate(Id,NewValue,(err,result)=>{
+    Blog.findOneAndUpdate(Id,NewValue,(err,result)=>{
+        if(err){
+            console.log(err);
+            res.redirect("/");
+        }else{
+            console.log("Update!!");
+            res.redirect("/blogs/"+result._id);
+        }
+    })
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {

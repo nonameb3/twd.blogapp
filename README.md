@@ -1,14 +1,17 @@
-# twd.blogapp
+# Blogapp - NodeJS Technology Web App Development by The Web Developer Bootcamp.
+My NodeJS exercise from Colt Steele's Udemy Web Development course.
 
-## Tecnology
+## Technology
 - Semantic UI
-- EJS
 - HTML
 - CSS
 - Javascript
-- NodeJS
 - MongoDB
-- Mongoose
-- Express
+- NodeJS
+    - EJS
+    - Mongoose
+    - Express
+    - Method override
+    - body-parser
 
 
